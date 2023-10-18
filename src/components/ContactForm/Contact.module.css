@@ -1,20 +1,37 @@
-.container{
+/* .container{
     display: flex;
     max-width: 1000px;
     margin: 0 auto;
     margin-top: 40px;
-    align-items: end;
-}
+    margin-right: 80px;
+} */
+.backgroundImage {
+    background-image: url(''); /* Replace with the actual image path */
+    background-size: cover; /* Adjust as needed */
+    background-repeat: no-repeat;
+    background-position: center;
+    /* Additional background styles if desired */
+  }
 .top_btn{
     display: flex;
     gap:32px;
-    
 
 }
+.separator {
+    height: 2px;
+    background-color: black;
+    margin: 5px 0;
+    width: 500px; /* Adjust as needed */
+    
+  }
 .contact_form{
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto;
+    margin-top: 40px;
+    
 }
 .contact_form form{
     display: flex;

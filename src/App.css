@@ -9,20 +9,14 @@ body{
 *{
     margin: 0;
 }
+
 .logo img{
     padding-top: 20px;
     height: 110px;
     scale: 1.3;
     /* object-fit: cover; */
 }
-button{
-    all:unset;
-    padding: 6px 16px;
-    background: var(--red);
-    height: 32px;
-    color: white;
-    font-weight: 500;
-}
+
 .container{
     margin:0 auto;
     /* max-width: 1280px; */
@@ -33,13 +27,18 @@ nav{
     max-width: 1450px;
     height:72px;
     align-items: center;
+   
 
 }
 nav ul{
     display: flex;
     list-style: none;
     gap: 24px;
-    padding-top: 20px;
+    padding-top: 10px;
+}
+nav a{
+    text-decoration: none;
+    color: black;
 }
 .photo-container {
     position: relative; 
@@ -49,7 +48,11 @@ nav ul{
   .background-image {
     width: 100%; 
     opacity: 80%;
-    height: auto; 
+    height: auto;
+    filter: contrast(150%);  
+  }
+  .info-image{
+    filter: contrast(120%);  
   }
   
   .content {
@@ -83,7 +86,7 @@ nav ul{
     margin-right: 10px;
   }
   
-  button {
+  .nav-item button {
     padding: 10px 20px;
     background-color: #007bff;
     color: white;
@@ -106,19 +109,19 @@ nav ul{
     margin-right: 20px;
   }
   
-  ul {
+  .footer-section ul {
     list-style: none;
     padding: 0;
   }
-  
-  li {
-    margin-bottom: 10px;
+  .footer-section li {
+    margin-bottom: 5px;
   }
-  
-  a {
-    color: #fff;
+  .footer-section a{
     text-decoration: none;
-  }
+    color: black;
+    cursor: pointer;
+}
+  
   .reviews-section {
     padding: 20px;
   }
@@ -145,14 +148,10 @@ nav ul{
     border: 1px solid #ccc;
     border-radius: 5px;
   }
-  
-  
-  /* Statistics.css */
-
   .statistics {
     display: flex;
     justify-content: space-around;
-    background-color:white;
+    background-color: white;
     padding: 20px;
   }
   
@@ -162,14 +161,12 @@ nav ul{
   }
   
   /* Style the separator line */
-  .separator {
+  .separate {
     height: 2px;
     background-color: black;
     margin: 5px 0;
     width: 180px; /* Adjust as needed */
   }
-  
- 
   
   .value {
     font-size: 24px;
@@ -181,6 +178,7 @@ nav ul{
     color: #555;
     margin: 5px 0;
   }
+
   .info-section {
     display: flex;
     justify-content: space-between;

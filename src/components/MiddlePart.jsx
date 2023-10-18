@@ -8,24 +8,24 @@ const MiddlePart = () => {
    <div className="statistics">
     <div className="stat-item">
       <div className="value">160k+</div>
-      <div className="separator"></div>
+      <div className="separate"></div>
       <div className="label">Travel buddies found</div>
     </div>
     <div className="stat-item">
       <div className="value">8k+</div>
-      <div className="separator"></div>
+      <div className="separate"></div>
       <div className="label">Destinations traveled</div>
     </div>
     <div className="stat-item">
       <div className="value">4.6</div>
-      <div className="separator"></div>
+      <div className="separate"></div>
       <div className="label">Trustpilot score</div>
     </div>
   </div>
   <div className="info-section">
       <div className="info-text">
         <h2>Real & Verified Travelers!</h2>
-        <div className="separator"></div>
+        <div className="separate"></div>
         <p>
           Find Travel Buddies on Find Your Travel Buddy - the best Travel Buddy Website out
           there. Every trip is organized by verified & passionate travelers just
@@ -36,7 +36,7 @@ const MiddlePart = () => {
         <img src="/images/sidephoto.jpg" alt="Travel Buddy" />
       </div>
     </div>
-    <div className="how-it-works">
+    <div id="working-section" className="how-it-works">
       <h2>How Does It Work?</h2>
       <p>Find your next travel buddies in just a few clicks. Simple as ever!</p>
     </div>
@@ -82,7 +82,7 @@ const MiddlePart = () => {
         emoji="⏰" 
       />
     </div>
-    <div className="how-it-works">
+    <div className="how-it-works" id="review-pilot">
       <h2>Reviews from our TripMates</h2>
     </div>
     </div>

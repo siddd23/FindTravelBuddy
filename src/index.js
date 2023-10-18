@@ -7,6 +7,10 @@ import { ClerkProvider, RedirectToSignIn, SignUp, SignedIn, SignedOut } from "@c
 import { useNavigate,Routes,Route,BrowserRouter } from 'react-router-dom';
 import ProtectedPage from './Pages/ProtectedPage';
 import SignIn from './Pages/SignIn'
+import ContactForm from './components/ContactForm/ContactForm';
+import StartTripComponent from './components/StartTrip/StartTripComponent'
+import HomePage from './Pages/HomePage'
+import AboutUsComponent from './components/AboutUs/AboutUsComponent';
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
 }
@@ -45,6 +49,11 @@ const ClerkWithRoutes = () =>{
           }
         />
         {/* <Route path='/sign' */}
+        <Route path="/home" element={<HomePage />}/>
+        <Route path="/contact" element={<ContactForm />}/>
+        <Route path="/startTrip" element={<StartTripComponent />}/>
+        <Route path="/about" element={<AboutUsComponent />}/>
+
     </Routes>
     </ClerkProvider>
   )
