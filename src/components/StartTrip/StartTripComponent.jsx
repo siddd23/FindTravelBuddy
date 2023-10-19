@@ -1,17 +1,28 @@
 import React, { useState } from 'react';
-import Navigation from '../Navigation';
+import Navigation from '../Navigation'; // Import Navigation component if available
 import './StartTrip.css';
-import { MdCheck } from 'react-icons/md';
 
 const StartTripComponent = () => {
+  // State variables for managing form data and steps
+  const [tripData, setTripData] = useState({});
+  const [tripName, setTripName] = useState('');
+  const [overview, setOverview] = useState('');
+  const [aboutYou, setAboutYou] = useState('');
+  const [departureDateError, setDepartureDateError] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedType, setSelectedType] = useState('');
   const [step, setStep] = useState(1);
+  const [accommodation, setAccommodation] = useState([]);
   const [inclusions, setInclusions] = useState(['']);
   const [exclusions, setExclusions] = useState(['']);
   const [specialItems, setSpecialItems] = useState(['']);
   const [tripItinerary, setTripItinerary] = useState('');
   const [tripExpense, setTripExpense] = useState(0);
+
+  // Get the current date in ISO format
+  const currentDate = new Date().toISOString().split('T')[0];
+
+  // Define categories for the trip
   const categories = [
     { id: 1, name: 'Food' },
     { id: 2, name: 'Wellness' },
@@ -25,22 +36,40 @@ const StartTripComponent = () => {
     { id: 10, name: 'Female Only' },
   ];
 
+  // Handle category selection
   const handleCategoryClick = (categoryId) => {
     setSelectedCategory(categoryId);
   };
+
+  // Handle trip type selection
   const handleTypeChange = (event) => {
     setSelectedType(event.target.value);
   };
 
+  // Handle next button click
   const handleNextClick = () => {
     if (step === 1 && selectedCategory && selectedType) {
-      setStep(2); // Proceed to the next page
-    }
-    else if (step === 2) {
-      setStep(3); // Proceed to step 3
+      const departureDate = document.getElementById('departureDate').value;
+      if (!departureDate) {
+        setDepartureDateError('Please select a departure date');
+        return;
+      } else {
+        setDepartureDateError(departureDateError);
+      }
+
+      // Update trip data with category and type
+      setTripData({
+        ...tripData,
+        category: categories.find((cat) => cat.id === selectedCategory)?.name,
+        tripType: selectedType,
+      });
+      setStep(2); // Move to the next step
+    } else if (step === 2) {
+      setStep(3); // Move to the next step
     }
   };
 
+  // Handle back button click
   const handleBackClick = () => {
     if (step === 3) {
       setStep(2); // Go back to step 2
@@ -48,35 +77,119 @@ const StartTripComponent = () => {
       setStep(1); // Go back to step 1
     }
   };
+
+  // Function to add an input field to a list
   const addInput = (list, setList) => {
     setList([...list, '']);
   };
 
+  // Function to remove an input field from a list
   const removeInput = (list, setList, index) => {
     const updatedList = list.filter((_, i) => i !== index);
     setList(updatedList);
   };
 
+  // Handle input change in a list
   const handleInputChange = (list, setList, event, index) => {
     const updatedList = [...list];
     updatedList[index] = event.target.value;
     setList(updatedList);
   };
 
+    // Handle input change in a list
+    const handleInputChangeAccommodation = (list, setList, event) => {
+      const updatedList = [...list];
+      updatedList.push(event.target.value);
+      setList(updatedList);
+    };
+  
+
+  
+  // Handle form submission
+  const handleFormSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submission
+  
+    try {
+      const formData = {
+        // Common fields that are present on all steps
+        departureDate: departureDateError,
+        category: categories.find((category) => category.id === selectedCategory)?.name || '',
+        tripType: selectedType,
+        tripName: tripName,
+        tripDescription: 'NA',
+        overview: overview,
+        aboutYou: aboutYou,
+        accommodation: accommodation,
+        inclusions: inclusions,
+        exclusions: exclusions,
+        specialItems: specialItems,
+        tripItinerary: tripItinerary, // Include the value, not the DOM element
+        tripExpense: tripExpense, // Include the value, not the DOM element
+      };
+  
+      if (step === 1) {
+        // Step 1 specific data collection
+        const departureDateInput = document.getElementById('departureDate');
+        if (departureDateInput) {
+          formData.departureDate = setDepartureDateError(departureDateInput.value);
+        }
+      } 
+      if (step === 2) {
+        // Step 3 specific data collection
+        const tripNameInput = document.getElementById('tripName');
+        const overviewInput = document.getElementById('overview');
+        const aboutTextInput = document.getElementById('abouttext');
+        // const accommodation = document.getElementById('')
+        if (tripNameInput && overviewInput && aboutTextInput) {
+          formData.tripName = tripNameInput.value;
+          formData.overview = overviewInput.value;
+          formData.aboutYou = aboutTextInput.value;
+        }
+      } 
+      if (step === 3) {
+        // Include the values for tripItinerary and tripExpense, not the DOM elements
+        formData.tripItinerary = tripItinerary;
+        formData.tripExpense = tripExpense;
+      }
+  
+      // Submit the form data to the server or API
+  
+      const response = await fetch('http://localhost:5000/submittrip/posttrip', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      if (response.status === 201) {
+        alert('Trip data saved successfully.');
+        // Optionally, reset the form fields or redirect the user
+      } else {
+        alert('An error occurred while saving the data.');
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+
   return (
     <div>
       <div>
         <Navigation />
       </div>
-      <div className="main-container">
-        {step === 1 && (
+      <form onSubmit={handleFormSubmit}>
+        <div className="main-container">
+          {step === 1 && (
           <div>
             <h2>Hi, Let's get started!</h2>
             <div className="date-picker-container">
               <h3>Departure Date</h3>
               <div className="date-picker">
-                <input type="date" id="departureDate" name="departureDate"  required />
+                <input type="date" id="departureDate" name="departureDate"  min={currentDate} required  value={departureDateError} onChange={(e) => setDepartureDateError(e.target.value)}/>
               </div>
+              {/* {departureDateError && <div style={{ color: 'red' }}>{departureDateError}</div>} */}
             </div>
             <div className="separator"></div>
             <div className="category-picker-container">
@@ -125,12 +238,14 @@ const StartTripComponent = () => {
                     <p>Sharing accommodation and working space with other remote professionals.</p>
                   </label>
                 </div>
+                
               </div>
+             
             </div>
            
           </div>
-        )}
-        {step === 2 && (
+          )}
+          {step === 2 && (
           <div>
           
           <div className="trip-name-input">
@@ -141,6 +256,8 @@ const StartTripComponent = () => {
                   name="tripName"
                   placeholder="Enter your trip name"
                   required
+                  value={tripName}
+                  onChange={(e) => setTripName(e.target.value)}
                 />
           </div>
           <div className='trip-description'>
@@ -155,6 +272,8 @@ const StartTripComponent = () => {
                 placeholder="Enter an overview of your trip"
                 rows="6"
                 required
+                value={overview}
+                onChange={(e) => setOverview(e.target.value)}
               />
             </div>
             <div className="about-textarea">
@@ -164,6 +283,8 @@ const StartTripComponent = () => {
                 name="abouttext"
                 placeholder="Introduce Yourself and your expectations of the trip"
                 rows="6"
+                value={aboutYou}
+                onChange={(e) => setAboutYou(e.target.value)}
                 required
               />
             </div>
@@ -172,24 +293,24 @@ const StartTripComponent = () => {
                 <div className="accommodation-columns">
                   <div className="accommodation-column">
                     <label>
-                      <input type="checkbox" name="accommodation" value="hotel" /> Hotel
+                      <input type="checkbox" name="accommodation" value="hotel"  onChange={(event) => handleInputChangeAccommodation(accommodation, setAccommodation,event)} /> Hotel
                     </label>
                     <label>
-                      <input type="checkbox" name="accommodation" value="hostel" /> Hostel
+                      <input type="checkbox" name="accommodation" value="hostel" onChange={(event) => handleInputChangeAccommodation(accommodation, setAccommodation,event)} /> Hostel
                     </label>
                     <label>
-                      <input type="checkbox" name="accommodation" value="apartment" /> Apartment
+                      <input type="checkbox" name="accommodation" value="apartment" onChange={(event) => handleInputChangeAccommodation(accommodation, setAccommodation,event)} /> Apartment
                     </label>
                   </div>
                   <div className="accommodation-column">
                     <label>
-                      <input type="checkbox" name="accommodation" value="bedbreakfast" /> Bed & Breakfast
+                      <input type="checkbox" name="accommodation" value="bedbreakfast" onChange={(event) => handleInputChangeAccommodation(accommodation, setAccommodation,event)} /> Bed & Breakfast
                     </label>
                     <label>
-                      <input type="checkbox" name="accommodation" value="campsite" /> Campsite
+                      <input type="checkbox" name="accommodation" value="campsite" onChange={(event) => handleInputChangeAccommodation(accommodation, setAccommodation,event)} /> Campsite
                     </label>
                     <label>
-                      <input type="checkbox" name="accommodation" value="other" /> Other
+                      <input type="checkbox" name="accommodation" value="other" onChange={(event) => handleInputChangeAccommodation(accommodation, setAccommodation,event)} /> Other
                     </label>
                   </div>
                 </div>
@@ -265,8 +386,9 @@ const StartTripComponent = () => {
                       </div>
                     </div>
                       </div>
-                    )}
-                    {step === 3 && (
+          )}
+          {step === 3 && (
+            <div>
                       <div className="form-container">
                       <h3>Trip Itinerary</h3>
                       <label htmlFor="tripItinerary">Suitable for your trip:</label>
@@ -293,26 +415,27 @@ const StartTripComponent = () => {
                         />
                       </div>
                     </div>
-                    )}
-         
-      </div>
-      <div className="button-container">
-      {step > 1 && (
-          <button className="back-button" onClick={handleBackClick}>
-            Back
-          </button>
-        )}
-        {step < 3 && (
-          <button className="next-button" onClick={handleNextClick}>
-            Next
-          </button>
-        )}
-        {step === 3 && (
-          <button className="submit-button" type="submit">
-            Submit
-          </button>
-        )}
             </div>
+          )}
+        </div>
+        <div className="button-container">
+          {step > 1 && (
+            <button className="back-button" onClick={handleBackClick}>
+              Back
+            </button>
+          )}
+          {step < 3 && (
+            <button className="next-button" onClick={handleNextClick}>
+              Next
+            </button>
+          )}
+          {step === 3 && (
+            <button className="submit-button" type="submit" onClick={handleFormSubmit}>
+              Submit
+            </button>
+          )}
+        </div>
+      </form>
     </div>
   );
 };

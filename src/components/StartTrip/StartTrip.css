@@ -53,9 +53,12 @@
 .category.selected {
     background-color: #007bff; /* New background color when selected */
     font-weight: bold;
+    color: #333;
   }
    
-
+  .category.selected span {
+    color: white; /* Set the color for the span inside the selected category */
+  }
   .trip-type-options {
     display: flex;
   }
