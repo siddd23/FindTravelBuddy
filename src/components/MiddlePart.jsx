@@ -2,6 +2,7 @@ import React from 'react'
 import '../App.css'
 import SectionComponent from '../components/Section/SectionComponent';
 import SecondSectionComponent from '../components/SecondSection/SecondSectionComponent'
+import TripList from '../components/CardView/TripList'
 const MiddlePart = () => {
   return (
     <div>
@@ -57,6 +58,7 @@ const MiddlePart = () => {
         imageSrc="./images/world.png" 
       />
     </div>
+    <TripList />
     <div className="how-it-works">
       <h2>Why Travel With Us</h2>
     </div>
