@@ -202,7 +202,14 @@ const StartTripComponent = () => {
             <div className="date-picker-container">
               <h3>Departure Date</h3>
               <div className="date-picker">
-                <input type="date" id="departureDate" name="departureDate"  min={currentDate} required  value={departureDateError} onChange={(e) => setDepartureDateError(e.target.value)}/>
+                <input 
+                type="date" 
+                id="departureDate" 
+                name="departureDate"  
+                min={currentDate} 
+                required  
+                value={departureDateError} 
+                onChange={(e) => setDepartureDateError(e.target.value)}/>
               </div>
               {/* {departureDateError && <div style={{ color: 'red' }}>{departureDateError}</div>} */}
             </div>

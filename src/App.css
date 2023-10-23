@@ -69,6 +69,16 @@ nav a{
     display: flex;
     align-items: center;
     margin: 10px;
+    
+  }
+  .date-picker {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    margin-right: 10px;
+    font-size: 16px;
+    color: gray;
+    /* Add any other styles you want for the date picker */
   }
   
   input[type="text"] {
@@ -77,6 +87,7 @@ nav a{
     border: 1px solid #ccc;
     border-radius: 4px;
     margin-right: 10px;
+
   }
   
   select {
