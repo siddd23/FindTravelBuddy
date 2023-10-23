@@ -65,6 +65,21 @@ const StartTripComponent = () => {
       });
       setStep(2); // Move to the next step
     } else if (step === 2) {
+      const tripNameInput = document.getElementById('tripName').value;
+      const overviewInput = document.getElementById('overview').value;
+      const aboutYouInput = document.getElementById('abouttext').value;
+
+      if (!tripNameInput || !overviewInput || !aboutYouInput) {
+        // Display an error message or handle the missing fields in your preferred way
+        alert('Please fill in all required fields');
+        return;
+      }
+
+      // Update trip data with step 2 data
+      setTripName(tripNameInput);
+      setOverview(overviewInput);
+      setAboutYou(aboutYouInput);
+
       setStep(3); // Move to the next step
     }
   };
@@ -249,12 +264,12 @@ const StartTripComponent = () => {
           <div>
           
           <div className="trip-name-input">
-                <label htmlFor="tripName">Trip Name</label>
+                <label htmlFor="tripName">Destination Place</label>
                 <input
                   type="text"
                   id="tripName"
                   name="tripName"
-                  placeholder="Enter your trip name"
+                  placeholder="Enter your trip destination"
                   required
                   value={tripName}
                   onChange={(e) => setTripName(e.target.value)}
@@ -326,6 +341,7 @@ const StartTripComponent = () => {
                               name="inclusion"
                               placeholder="Press + to add more"
                               value={inclusion}
+                              required
                               onChange={(event) => handleInputChange(inclusions, setInclusions,event, index)}
                             />
                             <button
@@ -349,6 +365,7 @@ const StartTripComponent = () => {
                               name="exclusion"
                               placeholder="Press + to add more"
                               value={exclusion}
+                              required
                               onChange={(event) => handleInputChange(exclusions, setExclusions,event, index)}
                             />
                             <button
@@ -368,7 +385,7 @@ const StartTripComponent = () => {
                         {specialItems.map((special, index) => (
                           <div className="special-input" key={index}>
                             <input
-                              
+                              required
                               type="text"
                               name="special"
                               placeholder="Press + to add more"

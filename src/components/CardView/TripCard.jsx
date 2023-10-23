@@ -1,4 +1,3 @@
-// TripCard.js
 import React from 'react';
 import './TripCard.css';
 
@@ -9,7 +8,7 @@ const TripCard = ({ trip }) => {
         <h3 className="trip-name">{trip.tripName}</h3>
         <p className="trip-category">Category: {trip.category}</p>
       </div>
-      <p className="trip-description">{trip.tripDescription}</p>
+      <p className="trip-description">{trip.overview}</p>
       <div className="trip-details">
         <div className="trip-detail">
           <strong>Departure Date:</strong> {new Date(trip.departureDate).toLocaleDateString()}
@@ -19,7 +18,8 @@ const TripCard = ({ trip }) => {
         </div>
       </div>
       <div className="trip-options">
-        <button className="btn">View Details</button>
+        <button className="details_btn">View Details</button>
+        <button className="join_btn">Join Trip</button>
       </div>
     </div>
   );
