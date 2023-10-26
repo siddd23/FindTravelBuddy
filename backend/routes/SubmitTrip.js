@@ -58,6 +58,28 @@ router.get('/gettrips', async function(req,res){
       res.status(500).send({message: error.message})
   }
 })
+router.post('/gettripsbylocanddate', async function(req, res) {
+  try {
+    console.log(req.body);
+    const { location, selectedDate } = req.body; // Assuming data is passed as query parameters
+
+    if (!location || !selectedDate) {
+      return res.status(400).json({ message: 'Location and date are required.' });
+    }
+
+    const tripData = await Trip.find({ tripName: location, departureDate: selectedDate });
+
+    if (tripData.length === 0) {
+      return res.status(404).json({ message: 'No trips found with the given location and date.' });
+    }
+
+    return res.status(200).json(tripData);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 router.get('/test', async function(req,res){
   try {
     return res.status(200).json("Connection Done");
