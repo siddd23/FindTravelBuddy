@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { createSearchParams,useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom'; // Import Link
 
 const HeroSection = () => {
@@ -17,16 +17,6 @@ const HeroSection = () => {
     setSelectedDate(event.target.value);
   };
 
-  const route = ()=>{
-    <Link
-    to={{
-      pathname: "/results",
-      state: { dataFromApi },
-    }}
-  >
-    Go to Results
-  </Link>
-  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -43,8 +33,8 @@ const HeroSection = () => {
       if (response.status === 200) {
         const data = await response.json();
         setDataFromApi(data);
-        console.log("Test",dataFromApi)
-        navigate("/results",{dataFromApi});
+        console.log("Test",data)
+        navigate(`/results?others=${JSON.stringify(data)}`);
       } else {
         console.error('An error occurred while saving the data.');
       }

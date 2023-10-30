@@ -1,35 +1,37 @@
 // ResultsPage.js
 import React from 'react';
 import Navigation from '../Navigation';
-const ResultPage = ({ data }) => {
+import { useSearchParams } from "react-router-dom";
+import './ResultPage.css'; 
+import TripCard from '../CardView/TripCard';
+const ResultPage = () => {
   // Check if data is defined
-  if (!data || !data.dataFromApi) {
-    // Handle the case where data is not available, for example, show a loading message or an error message
-    return (
-      <div>
-        <Navigation/>
-        <p>Loading...</p>
-        {/* You can add an error message here if needed */}
-      </div>
-    );
-  }
+  // const dataFromApi = data.location.state.dataFromApi;
+  const [params] = useSearchParams(); 
+  const dataParam =  params.get('others');
+  const data = JSON.parse(dataParam);
 
-  const { dataFromApi } = data; // Destructure dataFromApi from the data prop
+  console.log("data in Result Page",params.get('others'));
+  console.log("data extracted",data);
+  // if (!dataFromApi || !dataFromApi.length==0) {
+  //   // Handle the case where data is not available, for example, show a loading message or an error message
+  //   return (
+  //     <div>
+  //       <Navigation/>
+  //       <p>Loading...</p>
+  //       {/* You can add an error message here if needed */}
+  //     </div>
+  //   );
+  // }
 
   return (
     <div>
       {/* The rest of your component */}
-      {console.log("data in data  ", dataFromApi)}
       <Navigation/>
       <div className="results-container">
-        {dataFromApi.map((item) => (
+        {data.map((item) => (
           <div key={item._id} className="data-card">
-            <h2>{item.tripName}</h2>
-            <p>{item.tripDescription}</p>
-            <p>Category: {item.category}</p>
-            <p>Trip Type: {item.tripType}</p>
-            <p>Overview: {item.overview}</p>
-            {/* Add more data fields as needed */}
+                <TripCard key={item._id} trip={item} />
           </div>
         ))}
       </div>
