@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Navigation from '../Navigation'; // Import Navigation component if available
+import { useUser } from "@clerk/clerk-react";
 import './StartTrip.css';
-
+// { userEmail }
 const StartTripComponent = () => {
   // State variables for managing form data and steps
+  const { user } = useUser();
   const [tripData, setTripData] = useState({});
   const [tripName, setTripName] = useState('');
   const [overview, setOverview] = useState('');
@@ -21,7 +23,7 @@ const StartTripComponent = () => {
 
   // Get the current date in ISO format
   const currentDate = new Date().toISOString().split('T')[0];
-
+  const userEmail = user?.primaryEmailAddress.emailAddress;
   // Define categories for the trip
   const categories = [
     { id: 1, name: 'Food' },
@@ -127,6 +129,7 @@ const StartTripComponent = () => {
     try {
       const formData = {
         // Common fields that are present on all steps
+        userEmail: userEmail, // Add userEmail to the form data
         departureDate: departureDateError,
         category: categories.find((category) => category.id === selectedCategory)?.name || '',
         tripType: selectedType,

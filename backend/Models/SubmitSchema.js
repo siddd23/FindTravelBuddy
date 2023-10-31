@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 // Create a schema for your data
 const tripSchema = new mongoose.Schema({
+  userEmail: String,
   departureDate: Date,
   category: String,
   tripType: String,

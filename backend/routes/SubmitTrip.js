@@ -4,7 +4,9 @@ const Trip = require('../Models/SubmitSchema');
 
 router.post('/posttrip', async (req, res) => {
   try {
+    
     if (
+      !req.body.userEmail || 
       !req.body.departureDate ||
       !req.body.category ||
       !req.body.tripType ||
@@ -25,6 +27,7 @@ router.post('/posttrip', async (req, res) => {
     }
 
     const tripData = {
+      userEmail:req.body.userEmail, 
       departureDate: req.body.departureDate,
       category: req.body.category,
       tripType: req.body.tripType,

@@ -5,24 +5,14 @@ import { useSearchParams } from "react-router-dom";
 import './ResultPage.css'; 
 import TripCard from '../CardView/TripCard';
 const ResultPage = () => {
-  // Check if data is defined
-  // const dataFromApi = data.location.state.dataFromApi;
+ 
   const [params] = useSearchParams(); 
   const dataParam =  params.get('others');
   const data = JSON.parse(dataParam);
 
   console.log("data in Result Page",params.get('others'));
   console.log("data extracted",data);
-  // if (!dataFromApi || !dataFromApi.length==0) {
-  //   // Handle the case where data is not available, for example, show a loading message or an error message
-  //   return (
-  //     <div>
-  //       <Navigation/>
-  //       <p>Loading...</p>
-  //       {/* You can add an error message here if needed */}
-  //     </div>
-  //   );
-  // }
+  
 
   return (
     <div>
