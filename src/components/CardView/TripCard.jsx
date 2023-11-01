@@ -18,7 +18,11 @@ const TripCard = ({ trip }) => {
         <p className="trip-category">Category: {trip.category}</p>
       </div>
       <p className="trip-description">{trip.overview}</p>
+
       <div className="trip-details">
+        <div className="trip-detail">
+          <strong>User Email:</strong> {trip.userEmail}
+        </div>
         <div className="trip-detail">
           <strong>Departure Date:</strong> {new Date(trip.departureDate).toLocaleDateString()}
         </div>
@@ -35,7 +39,7 @@ const TripCard = ({ trip }) => {
           <div className="modal-content">
             <span className="close-modal" onClick={handleCloseModal}>&times;</span>
             <h2>{trip.tripName}</h2>
-            
+            <p> <strong>User Email:</strong> {trip.userEmail}</p>
             <p><strong>About You:</strong> {trip.aboutYou}</p>
             <p><strong>Accommodation:</strong> {trip.accommodation.join(', ')}</p>
             <p><strong>Inclusions:</strong> {trip.inclusions.join(', ')}</p>

@@ -13,6 +13,7 @@ import StartTripComponent from './components/StartTrip/StartTripComponent'
 import HomePage from './Pages/HomePage'
 import AboutUsComponent from './components/AboutUs/AboutUsComponent';
 import ResultPage from './components/ResultsPage/ResultPage';
+import RequestPage from './components/Request/RequestPage'
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
 }
@@ -56,7 +57,7 @@ const ClerkWithRoutes = () =>{
         <Route path="/startTrip" element={<StartTripComponent />}/>
         <Route path="/about" element={<AboutUsComponent />}/>
         <Route path='/results' element={<ResultPage/>} />
-
+        <Route path='/request' element={<RequestPage/>} />
     </Routes>
     </ClerkProvider>
   )
