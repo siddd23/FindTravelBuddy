@@ -3,7 +3,11 @@ import '../App.css'
 import SectionComponent from '../components/Section/SectionComponent';
 import SecondSectionComponent from '../components/SecondSection/SecondSectionComponent'
 import TripList from '../components/CardView/TripList'
+import { useUser } from "@clerk/clerk-react";
+
 const MiddlePart = () => {
+  const { user } = useUser();
+  const currentUserEmail = user?.primaryEmailAddress.emailAddress;
   return (
     <div>
    <div className="statistics">
@@ -58,7 +62,7 @@ const MiddlePart = () => {
         imageSrc="./images/world.png" 
       />
     </div>
-    <TripList />
+    <TripList currentUserEmail={currentUserEmail} />
     <div className="how-it-works">
       <h2>Why Travel With Us</h2>
     </div>

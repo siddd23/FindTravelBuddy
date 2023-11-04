@@ -1,7 +1,10 @@
 import React,{useState} from 'react';
 import './TripCard.css';
+import { Navigate, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const TripCard = ({ trip }) => {
+const TripCard = ({ trip , currentUserEmail}) => {
+  const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleOpenModal = () => {
@@ -11,6 +14,25 @@ const TripCard = ({ trip }) => {
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
+
+  const handelJoinTrip = ()=>{
+    const fetchData = ()=>{
+      try{
+        const res = axios.post('http://localhost:5000/submittrip/joinTrip',{
+          dep_date:trip.departureDate,
+          tripName:trip.tripName,
+          to_email_id:trip.userEmail,
+          from_email_id:currentUserEmail
+        });
+        console.log(res.data);
+      }catch (err){
+        console.log(err)
+      }
+    }
+    fetchData();
+  }
+ 
+
   return (
     <div className="trip-card">
       <div className="trip-header">
@@ -32,7 +54,8 @@ const TripCard = ({ trip }) => {
       </div>
       <div className="trip-options">
         <button className="details_btn" onClick={handleOpenModal}>View Details</button>
-        <button className="join_btn">Join Trip</button>
+        {currentUserEmail !== trip.userEmail && (
+        <button className="join_btn" onClick={handelJoinTrip}>Join Trip</button>)}
       </div>
       {isModalOpen && (
         <div className="trip-modal">

@@ -26,7 +26,7 @@ const Navigation =() =>{
                   <a href="/contact">Contact</a>
                 </li>
                 <li  >
-                  <a href="/request">Request</a>
+                  <a href="/requests">Request</a>
                 </li>
             </ul>
             <div className='userName'>{

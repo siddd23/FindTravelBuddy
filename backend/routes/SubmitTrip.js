@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Trip = require('../Models/SubmitSchema');
+const Request = require('../Models/RequestSchema');
+
 
 router.post('/posttrip', async (req, res) => {
   try {
@@ -95,5 +97,63 @@ router.get('/test', async function(req,res){
 router.get('/', (req, res) => {
   res.send('hello world')
 })
+
+router.post('/joinTrip',async function (req,res){
+  // const {_id,to_email_id,from_email_id} = req.body;
+  try{
+    const tripData={
+      dep_date:req.body.departureDate,
+      tripName:req.body.tripName,
+      to_email_id:req.body.to_email_id,
+      from_email_id:req.body.from_email_id,
+    }
+  const reqst = await Request.create(tripData);
+  return res.status(201).send(reqst);
+} catch (error) {
+  console.error(error);
+  res.status(500).send('An error occurred while saving the data.');
+}
+})
+
+router.post('/getjoinstrip', async function(req, res) {
+  try {
+    console.log(req.body);
+    const { to_email_id} = req.body; // Assuming data is passed as query parameters
+
+    if (! to_email_id) {
+      return res.status(400).json({ message: 'date are required.' });
+    }
+    const tripData = await Request.findOne({ to_email_id:to_email_id});
+    if (tripData.length === 0) {
+      return res.status(404).json({ message: 'No trips found.' });
+    }
+
+    return res.status(200).json(tripData);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
+router.post('/getbyfeilds', async function(req, res) {
+  try {
+    console.log(req.body);
+    const { to_email_id, tripName} = req.body; // Assuming data is passed as query parameters
+
+    if (! to_email_id ) {
+      return res.status(400).json({ message: 'date are required.' });
+    }
+    const tripData = await Trip.findOne({ userEmail:to_email_id,tripName:tripName});
+    if (tripData.length === 0) {
+      return res.status(404).json({ message: 'No trips found.' });
+    }
+
+    return res.status(200).json(tripData);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 
 module.exports = router;

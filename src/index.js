@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
@@ -13,13 +13,18 @@ import StartTripComponent from './components/StartTrip/StartTripComponent'
 import HomePage from './Pages/HomePage'
 import AboutUsComponent from './components/AboutUs/AboutUsComponent';
 import ResultPage from './components/ResultsPage/ResultPage';
-import RequestPage from './components/Request/RequestPage'
+import RequestList from './components/Request/RequestList'
 if (!process.env.REACT_APP_CLERK_PUBLISHABLE_KEY) {
   throw new Error("Missing Publishable Key")
 }
 const clerkPubKey = process.env.REACT_APP_CLERK_PUBLISHABLE_KEY;
 
 const ClerkWithRoutes = () =>{
+  const [requests, setRequests] = useState([]);
+  const handleRequestJoin = (userEmail, tripName) => {
+    // Add the join request to your state or send it to the server
+    setRequests([...requests, { userEmail, tripName }]);
+  };
   const navigate = useNavigate()
   return(
     <ClerkProvider 
@@ -57,7 +62,16 @@ const ClerkWithRoutes = () =>{
         <Route path="/startTrip" element={<StartTripComponent />}/>
         <Route path="/about" element={<AboutUsComponent />}/>
         <Route path='/results' element={<ResultPage/>} />
-        <Route path='/request' element={<RequestPage/>} />
+        <Route path="/requests" element={<RequestList/>}/>
+          {/* <RequestList
+            requests={requests}
+            onAcceptRequest={(userEmail, tripName) => {
+              // Handle request acceptance logic
+            }}
+            onDeclineRequest={(userEmail, tripName) => {
+              // Handle request decline logic
+            }}
+          /> */}
     </Routes>
     </ClerkProvider>
   )

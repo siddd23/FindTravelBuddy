@@ -2,11 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import TripCard from './TripCard';
 import './TripList.css'; // Add your CSS for styling
+import { useUser } from "@clerk/clerk-react";
 // import { response } from 'express';
 // import axios from 'axios';
 const TripList = () => {
+  const { user } = useUser();
   const [trips, setTrips] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const currentUserEmail = user?.primaryEmailAddress.emailAddress;
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex < trips.length - 3 ? prevIndex + 1 : prevIndex));
   };
@@ -32,7 +35,7 @@ const TripList = () => {
       console.error(error);
     }
   }
-
+ 
   useEffect(() => {
     getData(); // Call the getData function when the component mounts.
   }, []);
@@ -41,7 +44,12 @@ const TripList = () => {
     <div className="trip-list">
     <div className="trip-list-container">
       {trips.slice(currentIndex, currentIndex + 3).map((trip) => (
-        <TripCard key={trip._id} trip={trip} />
+        <TripCard 
+        key={trip._id} 
+        trip={trip} 
+        currentUserEmail={currentUserEmail}
+        // onRequestJoin={handleJoinRequest}
+        />
       ))}
     </div>
     <div className="trip-list-controls">
