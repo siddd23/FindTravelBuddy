@@ -106,6 +106,7 @@ router.post('/joinTrip',async function (req,res){
       tripName:req.body.tripName,
       to_email_id:req.body.to_email_id,
       from_email_id:req.body.from_email_id,
+      accepted_Status:false
     }
   const reqst = await Request.create(tripData);
   return res.status(201).send(reqst);
@@ -154,6 +155,42 @@ router.post('/getbyfeilds', async function(req, res) {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
+router.post('/acceptCard/:id', async (req, res) => {
+  try {
+    const cardId = req.params.id; // Get the card ID from the URL
+    console.log(cardId)
+    const updatedCard = await Request.findOneAndUpdate(
+      { _id: cardId },
+      { accepted_Status: true }
+    );
 
+    if (!updatedCard) {
+      return res.status(404).json({ message: 'Card not found' });
+    }
+    
+    res.status(200).json({ message: 'Card accepted', data: updatedCard });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+router.delete('/deleteCard/:id', async function(req,res){
+  try {
+    const id = req.params.id; // Get the card ID from the URL
+    if (!id) return res.status(404).json({ message: 'Card not found' });
+
+    // Use Mongoose to delete the card by its ID
+    const deletedCard = await Request.findByIdAndRemove(id);
+
+    if (!deletedCard) {
+      return res.status(404).json({ message: 'Card not found' });
+    }
+
+    res.status(200).json({ message: 'Card deleted' });
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+})
 
 module.exports = router;
