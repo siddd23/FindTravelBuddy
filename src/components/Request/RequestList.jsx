@@ -16,7 +16,7 @@ const RequestList = () => {
   const getData = async () => {
     setIsLoading(true); // Set loading state to true
     try {
-      const response = await axios.post('http://localhost:5000/submittrip/getjoinstrip', {
+      const response = await axios.post('https://findtravelbuddy.onrender.com/submittrip/getjoinstrip', {
         to_email_id: currentUser
       }, {
         headers: {
@@ -37,7 +37,7 @@ const RequestList = () => {
 
   const gotData = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/submittrip/getbyfeilds', {
+      const response = await axios.post('https://findtravelbuddy.onrender.com/submittrip/getbyfeilds', {
         to_email_id: currentUser,
         tripName: tripName
       }, {

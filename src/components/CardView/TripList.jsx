@@ -20,7 +20,7 @@ const TripList = () => {
 
   const getData = async () => {
     try {
-      const response = await fetch('http://localhost:5000/submittrip/gettrips', {
+      const response = await fetch('https://findtravelbuddy.onrender.com/submittrip/gettrips', {
         method: 'GET',
       });
 

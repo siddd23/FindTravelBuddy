@@ -172,7 +172,7 @@ const StartTripComponent = () => {
   
       // Submit the form data to the server or API
   
-      const response = await fetch('http://localhost:5000/submittrip/posttrip', {
+      const response = await fetch('https://findtravelbuddy.onrender.com/submittrip/posttrip', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

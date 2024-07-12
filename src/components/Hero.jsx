@@ -32,7 +32,7 @@ const HeroSection = () => {
     event.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/submittrip/gettripsbylocanddate', {
+      const response = await fetch('https://findtravelbuddy.onrender.com/submittrip/gettripsbylocanddate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

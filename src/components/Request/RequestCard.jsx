@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const RequestCard = ( {trip,  fromEmailId} ) => {
   const handleAccept = () => {
-    axios.post(`http://localhost:5000/submittrip/accept/${trip._id}`)
+    axios.post(`https://findtravelbuddy.onrender.com/submittrip/accept/${trip._id}`)
       .then(response => {
         // Handle the response if needed
         console.log(response.data);
@@ -16,7 +16,7 @@ const RequestCard = ( {trip,  fromEmailId} ) => {
   };
 
   const handleReject = () => {
-    axios.delete(`http://localhost:5000/submittrip/reject/${trip._id}`)
+    axios.delete(`https://findtravelbuddy.onrender.com/submittrip/reject/${trip._id}`)
       .then(response => {
         // Handle the response if needed
         console.log(response.data);

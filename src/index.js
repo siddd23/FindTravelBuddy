@@ -32,19 +32,19 @@ const ClerkWithRoutes = () =>{
       navigate={(to) => navigate(to)}
     >
     <Routes>
-      <Route path="/" element={<App />} />
+      <Route path="https://findyourtravelbuddy.netlify.app/" element={<App />} />
       <Route 
-          path="/sign-in/*"
+          path="https://findyourtravelbuddy.netlify.app/sign-in/*"
           element={<SignIn redirectUrl={'/protected'} routing="path" path="/sign-in"/>}
           // element={<SignIn redirectUrl={'/protected'} routing="path" path="/sign-in" />}
       />
       <Route
-        path="/sign-up/*"
+        path="https://findyourtravelbuddy.netlify.app/sign-up/*"
         element={<SignUp redirectUrl={'/protected'} routing="path" path="/sign-up" />}
       />
       
       <Route
-          path="/protected"
+          path="https://findyourtravelbuddy.netlify.app/protected"
           element={
             <>
             <SignedIn>
@@ -57,12 +57,12 @@ const ClerkWithRoutes = () =>{
           }
         />
         {/* <Route path='/sign' */}
-        <Route path="/home" element={<HomePage />}/>
-        <Route path="/contact" element={<ContactForm />}/>
-        <Route path="/startTrip" element={<StartTripComponent />}/>
-        <Route path="/about" element={<AboutUsComponent />}/>
-        <Route path='/results' element={<ResultPage/>} />
-        <Route path="/requests" element={<RequestList/>}/>
+        <Route path="https://findyourtravelbuddy.netlify.app/home" element={<HomePage />}/>
+        <Route path="https://findyourtravelbuddy.netlify.app/contact" element={<ContactForm />}/>
+        <Route path="https://findyourtravelbuddy.netlify.app/startTrip" element={<StartTripComponent />}/>
+        <Route path="https://findyourtravelbuddy.netlify.app/about" element={<AboutUsComponent />}/>
+        <Route path='https://findyourtravelbuddy.netlify.app/results' element={<ResultPage/>} />
+        <Route path="https://findyourtravelbuddy.netlify.app/requests" element={<RequestList/>}/>
           {/* <RequestList
             requests={requests}
             onAcceptRequest={(userEmail, tripName) => {

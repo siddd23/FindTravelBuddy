@@ -18,7 +18,7 @@ const TripCard = ({ trip , currentUserEmail}) => {
   const handelJoinTrip = ()=>{
     const fetchData = ()=>{
       try{
-        const res = axios.post('http://localhost:5000/submittrip/joinTrip',{
+        const res = axios.post('https://findtravelbuddy.onrender.com/submittrip/joinTrip',{
           dep_date:trip.departureDate,
           tripName:trip.tripName,
           to_email_id:trip.userEmail,
