@@ -155,42 +155,30 @@ router.post('/getbyfeilds', async function(req, res) {
     res.status(500).json({ message: 'Internal server error' });
   }
 });
-router.post('/acceptCard/:id', async (req, res) => {
+// Update request with accepted_Status = true
+router.post('/accept/:requestId', async (req, res) => {
   try {
-    const cardId = req.params.id; // Get the card ID from the URL
-    console.log(cardId)
-    const updatedCard = await Request.findOneAndUpdate(
-      { _id: cardId },
+    const requestId = req.params.requestId;
+    console.log(requestId)
+    const request = await Request.findOneAndUpdate(
+      { _id: requestId },
       { accepted_Status: true }
     );
-
-    if (!updatedCard) {
-      return res.status(404).json({ message: 'Card not found' });
-    }
-    
-    res.status(200).json({ message: 'Card accepted', data: updatedCard });
+    res.json({ message: 'Request accepted successfully', request:request });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: 'Error accepting request' });
   }
 });
-router.delete('/deleteCard/:id', async function(req,res){
+
+// Delete a request
+router.delete('/reject/:requestId', async (req, res) => {
   try {
-    const id = req.params.id; // Get the card ID from the URL
-    if (!id) return res.status(404).json({ message: 'Card not found' });
-
-    // Use Mongoose to delete the card by its ID
-    const deletedCard = await Request.findByIdAndRemove(id);
-
-    if (!deletedCard) {
-      return res.status(404).json({ message: 'Card not found' });
-    }
-
-    res.status(200).json({ message: 'Card deleted' });
+    const requestId = req.params.requestId;
+    const request = await Request.findByIdAndRemove(requestId);
+    res.json({ message: 'Request rejected and deleted successfully', request });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ message: 'Internal server error' });
+    res.status(500).json({ error: 'Error rejecting request' });
   }
-})
+});
 
 module.exports = router;

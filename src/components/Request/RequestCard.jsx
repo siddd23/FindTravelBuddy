@@ -3,25 +3,31 @@ import './RequestCard.css';
 import axios from 'axios';
 
 const RequestCard = ( {trip,  fromEmailId} ) => {
+  const handleAccept = () => {
+    axios.post(`http://localhost:5000/submittrip/accept/${trip._id}`)
+      .then(response => {
+        // Handle the response if needed
+        console.log(response.data);
+      })
+      .catch(error => {
+        // Handle errors if any
+        console.error(error);
+      });
+  };
+
+  const handleReject = () => {
+    axios.delete(`http://localhost:5000/submittrip/reject/${trip._id}`)
+      .then(response => {
+        // Handle the response if needed
+        console.log(response.data);
+      })
+      .catch(error => {
+        // Handle errors if any
+        console.error(error);
+      });
+  };
+
   
-  const handleAccept = async () => {
-    try {
-      const response = await axios.post(`http://localhost:5000/submittrip/acceptCard/${trip.id}`);
-      console.log(`Accepted card with ID: ${response.data.data._id}`);
-      // console.log('Response:', response.data);
-    } catch (error) {
-      // console.error('Error:', error);
-    }
-  };
-const handleReject = async () => {
-  try {
-    const response = await axios.post(`http://localhost:5000/submittrip/deleteCard/${trip.id}`);
-    console.log(`Rejected card with ID: ${response.data.data._id}`);
-    // console.log('Response:', response.data);
-  } catch (error) {
-    // console.error('Error:', error);
-    }
-  };
   return (
     <div className="request-card">
       <div className="request-header">
@@ -40,7 +46,7 @@ const handleReject = async () => {
         </div>
       </div>
       <div className="request-options">
-        <button className="accept_btn" onClick={handleAccept} >Accept</button>
+        <button className="accept_btn"  onClick={handleAccept}>Accept</button>
         <button className="reject_btn" onClick={handleReject}>Reject</button>
       </div>
     </div>
